@@ -1,31 +1,37 @@
-const canvas = document.getElementById("gameCanvas");
-const ctx = canvas.getContext("2d");
+const dino = document.getElementById("dino");
+const obstacle = document.getElementById("obstacle");
+const scoreDisplay = document.getElementById("score");
 
-let dino = { x: 50, y: 150, width: 20, height: 20, velocityY: 0, isJumping: false };
-let gravity = 0.5;
-let obstacles = [];
-let gameSpeed = 3;
+let isJumping = false;
+let score = 0;
 
-function update() {
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-    // Dino Jump Logic
-    if (dino.isJumping) dino.velocityY += gravity;
-    dino.y += dino.velocityY;
-
-    if (dino.y >= 150) { dino.y = 150; dino.isJumping = false; }
-
-    ctx.fillStyle = "black";
-    ctx.fillRect(dino.x, dino.y, dino.width, dino.height);
-
-    requestAnimationFrame(update);
-}
-
-document.addEventListener("keydown", function (event) {
-    if (event.code === "Space" && !dino.isJumping) {
-        dino.isJumping = true;
-        dino.velocityY = -10;
+document.addEventListener("keydown", function(event) {
+    if (event.code === "Space" && !isJumping) {
+        jump();
     }
 });
 
-update();
+function jump() {
+    isJumping = true;
+    dino.classList.add("jump");
+
+    setTimeout(() => {
+        dino.classList.remove("jump");
+        isJumping = false;
+    }, 500);
+}
+
+function checkCollision() {
+    let dinoTop = parseInt(window.getComputedStyle(dino).getPropertyValue("bottom"));
+    let obstacleLeft = parseInt(window.getComputedStyle(obstacle).getPropertyValue("left"));
+
+    if (obstacleLeft > 40 && obstacleLeft < 80 && dinoTop <= 20) {
+        alert("Game Over! Your Score: " + score);
+        score = 0;
+    } else {
+        score++;
+        scoreDisplay.innerText = "Score: " + score;
+    }
+}
+
+setInterval(checkCollision, 100);
