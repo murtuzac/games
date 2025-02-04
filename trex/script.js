@@ -18,6 +18,7 @@ document.addEventListener("keydown", function(event) {
 
 function jump() {
     isJumping = true;
+    toggleGame();
     dino.classList.add("jump");
 
     setTimeout(() => {
