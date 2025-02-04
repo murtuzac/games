@@ -101,4 +101,21 @@
             ];
             return winPatterns.some(pattern => 
                 gameBoard[pattern[0]] !== "" &&
-                gameBoard[pattern[0]] === gameBoard[p
+                gameBoard[pattern[0]] === gameBoard[pattern[1]] &&
+                gameBoard[pattern[0]] === gameBoard[pattern[2]]
+            );
+        }
+
+        function resetGame() {
+            gameBoard = ["", "", "", "", "", "", "", "", ""];
+            gameActive = true;
+            currentPlayer = "X";
+            statusText.textContent = "Player X's turn";
+            createBoard();
+        }
+
+        createBoard();
+    </script>
+
+</body>
+</html>
