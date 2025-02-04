@@ -1,2 +1,2 @@
-# games
-Fun Games
+# Games
+This repo contains small fun games.
