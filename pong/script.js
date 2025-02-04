@@ -60,9 +60,11 @@ function updateBall() {
     ball.style.top = ballY + "px";
     scoreDisplay.innerText = `Player 1: ${leftScore} | Player 2: ${rightScore}`;
 
-    // Increase ball speed every 5 points (combined score)
+    // Increase ball speed by 3% every 5 points, max 20% increase
     if ((leftScore + rightScore) % 5 === 0 && (leftScore + rightScore) !== 0) {
-        speedMultiplier += 0.2; // Increase speed by 20%
+        if (speedMultiplier < 1.2) {
+            speedMultiplier += 0.03; // Increase speed by 3%
+        }
     }
 }
 
