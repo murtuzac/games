@@ -35,7 +35,7 @@ h1 {
     position: absolute;
     bottom: 0;
     left: 580px;
-    animation: moveObstacle 1.5s infinite linear;
+    /* 🚀 Remove animation until game starts */
 }
 
 @keyframes moveObstacle {
@@ -54,10 +54,14 @@ h1 {
 }
 
 /* 🚀 Game Over Message Styling */
-.hidden {
-    display: none;
+#gameOverMessage {
     font-size: 20px;
     color: red;
+    font-weight: bold;
+}
+
+.hidden {
+    display: none;
 }
 
 button {
