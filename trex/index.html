@@ -4,14 +4,16 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dino Run</title>
-    <style>
-        body { text-align: center; font-family: Arial, sans-serif; }
-        canvas { border: 2px solid black; }
-    </style>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <h1>Dino Run!</h1>
-    <canvas id="gameCanvas" width="800" height="200"></canvas>
+    <h1>🦖 Dino Run</h1>
+    <p>Press <b>Space</b> to Jump!</p>
+    <div id="game">
+        <div id="dino"></div>
+        <div id="obstacle"></div>
+    </div>
+    <p id="score">Score: 0</p>
     <script src="script.js"></script>
 </body>
 </html>
