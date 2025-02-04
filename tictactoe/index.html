@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tic-Tac-Toe</title>
+    <title>Tic-Tac-Toe vs CPU</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -24,7 +24,7 @@
             grid-template-columns: repeat(3, 1fr);
             grid-template-rows: repeat(3, 1fr);
             gap: 5px;
-            width: 90vw; /* Makes it responsive */
+            width: 90vw;
             max-width: 400px;
             height: 90vw;
             max-height: 400px;
@@ -41,7 +41,7 @@
             border: 2px solid black;
             background-color: #f9f9f9;
             cursor: pointer;
-            touch-action: manipulation; /* Improves touch response */
+            touch-action: manipulation;
         }
 
         .cell:active {
@@ -58,8 +58,8 @@
 </head>
 <body>
 
-    <h1>Tic-Tac-Toe</h1>
-    <p id="status">Player X's turn</p>
+    <h1>Tic-Tac-Toe vs CPU</h1>
+    <p id="status">Your turn (X)</p>
 
     <div class="board" id="board">
         <!-- Cells will be created dynamically -->
@@ -68,7 +68,7 @@
     <button onclick="resetGame()">Restart Game</button>
 
     <script>
-        let currentPlayer = "X";
+        let currentPlayer = "X"; // You are always X, CPU is O
         let gameBoard = ["", "", "", "", "", "", "", "", ""];
         let gameActive = true;
 
@@ -87,12 +87,12 @@
 
         function handleMove(event) {
             const index = event.target.dataset.index;
-            if (gameBoard[index] === "" && gameActive) {
-                gameBoard[index] = currentPlayer;
-                event.target.textContent = currentPlayer;
+            if (gameBoard[index] === "" && gameActive && currentPlayer === "X") {
+                gameBoard[index] = "X";
+                event.target.textContent = "X";
 
                 if (checkWin()) {
-                    document.getElementById("status").textContent = `Player ${currentPlayer} Wins!`;
+                    document.getElementById("status").textContent = "You Win!";
                     gameActive = false;
                     return;
                 } else if (!gameBoard.includes("")) {
@@ -100,9 +100,35 @@
                     gameActive = false;
                     return;
                 }
-                
-                currentPlayer = currentPlayer === "X" ? "O" : "X";
-                document.getElementById("status").textContent = `Player ${currentPlayer}'s turn`;
+
+                currentPlayer = "O";
+                document.getElementById("status").textContent = "CPU's turn...";
+                setTimeout(cpuMove, 500); // Small delay for realism
+            }
+        }
+
+        function cpuMove() {
+            let emptyCells = gameBoard.map((val, i) => val === "" ? i : null).filter(val => val !== null);
+
+            if (emptyCells.length > 0 && gameActive) {
+                let cpuIndex = emptyCells[Math.floor(Math.random() * emptyCells.length)];
+                gameBoard[cpuIndex] = "O";
+
+                let cell = document.querySelector(`[data-index='${cpuIndex}']`);
+                cell.textContent = "O";
+
+                if (checkWin()) {
+                    document.getElementById("status").textContent = "CPU Wins!";
+                    gameActive = false;
+                    return;
+                } else if (!gameBoard.includes("")) {
+                    document.getElementById("status").textContent = "It's a Draw!";
+                    gameActive = false;
+                    return;
+                }
+
+                currentPlayer = "X";
+                document.getElementById("status").textContent = "Your turn (X)";
             }
         }
 
@@ -123,7 +149,7 @@
             gameBoard = ["", "", "", "", "", "", "", "", ""];
             gameActive = true;
             currentPlayer = "X";
-            document.getElementById("status").textContent = "Player X's turn";
+            document.getElementById("status").textContent = "Your turn (X)";
             createBoard();
         }
 
