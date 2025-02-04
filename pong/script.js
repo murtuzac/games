@@ -4,9 +4,11 @@ const paddleRight = document.getElementById("paddleRight");
 const ball = document.getElementById("ball");
 const scoreDisplay = document.getElementById("score");
 
-let ballX = 290, ballY = 190, ballSpeedX = 3, ballSpeedY = 3;
+let ballX = 290, ballY = 190;
+let ballSpeedX = 3, ballSpeedY = 3;
 let paddleLeftY = 160, paddleRightY = 160;
 let leftScore = 0, rightScore = 0;
+let speedMultiplier = 1; // Ball speed multiplier
 
 // Move paddles with keys
 document.addEventListener("keydown", (event) => {
@@ -28,8 +30,8 @@ document.addEventListener("keydown", (event) => {
 
 // Ball movement logic
 function updateBall() {
-    ballX += ballSpeedX;
-    ballY += ballSpeedY;
+    ballX += ballSpeedX * speedMultiplier;
+    ballY += ballSpeedY * speedMultiplier;
 
     // Ball bouncing off top and bottom walls
     if (ballY <= 0 || ballY >= 385) ballSpeedY *= -1;
@@ -57,6 +59,11 @@ function updateBall() {
     ball.style.left = ballX + "px";
     ball.style.top = ballY + "px";
     scoreDisplay.innerText = `Player 1: ${leftScore} | Player 2: ${rightScore}`;
+
+    // Increase ball speed every 5 points (combined score)
+    if ((leftScore + rightScore) % 5 === 0 && (leftScore + rightScore) !== 0) {
+        speedMultiplier += 0.2; // Increase speed by 20%
+    }
 }
 
 // Reset ball to center after scoring
