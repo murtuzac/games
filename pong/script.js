@@ -3,6 +3,7 @@ const paddleLeft = document.getElementById("paddleLeft");
 const paddleRight = document.getElementById("paddleRight");
 const ball = document.getElementById("ball");
 const scoreDisplay = document.getElementById("score");
+const speedDisplay = document.getElementById("speed"); // New speed display
 
 let ballX = 290, ballY = 190;
 let ballSpeedX = 3, ballSpeedY = 3;
@@ -59,6 +60,7 @@ function updateBall() {
     ball.style.left = ballX + "px";
     ball.style.top = ballY + "px";
     scoreDisplay.innerText = `Player 1: ${leftScore} | Player 2: ${rightScore}`;
+    speedDisplay.innerText = `Speed: ${(speedMultiplier * 100).toFixed(0)}%`; // Display speed as percentage
 
     // Increase ball speed by 3% every 5 points, max 20% increase
     if ((leftScore + rightScore) % 5 === 0 && (leftScore + rightScore) !== 0) {
