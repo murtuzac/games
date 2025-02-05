@@ -1,11 +1,6 @@
 const canvas = document.getElementById("snakeCanvas");
 const ctx = canvas.getContext("2d");
 
-// Check if the canvas is properly initialized
-if (!canvas || !ctx) {
-    console.error("Canvas or context not found!");
-}
-
 const tileSize = 20;
 let snake = [{x: 5, y: 5}];
 let direction = "RIGHT";
@@ -13,8 +8,7 @@ let food = {x: 8, y: 8};
 let gameInterval;
 let isTouchScreen = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
 
-// Set up the controls for keyboard and touch
-function setControls() {
+const setControls = () => {
     if (isTouchScreen) {
         document.getElementById('upBtn').addEventListener('click', () => setDirection("UP"));
         document.getElementById('downBtn').addEventListener('click', () => setDirection("DOWN"));
@@ -28,21 +22,20 @@ function setControls() {
             if (e.key === "ArrowRight") setDirection("RIGHT");
         });
     }
-}
+};
 
-// Change snake direction
-function setDirection(newDirection) {
+// Change snake direction based on input
+const setDirection = (newDirection) => {
     if (newDirection === "UP" && direction !== "DOWN") direction = "UP";
     if (newDirection === "DOWN" && direction !== "UP") direction = "DOWN";
     if (newDirection === "LEFT" && direction !== "RIGHT") direction = "LEFT";
     if (newDirection === "RIGHT" && direction !== "LEFT") direction = "RIGHT";
-}
+};
 
-// Draw the game board
-function draw() {
-    // Make sure the canvas is getting cleared
+// Draw the game
+const draw = () => {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
-    
+
     // Draw snake
     snake.forEach((segment, index) => {
         ctx.fillStyle = index === 0 ? "green" : "blue";
@@ -68,21 +61,22 @@ function draw() {
         snake.pop();
     }
 
-    // Check for collisions with walls or self
+    // Check for collisions
     if (head.x < 0 || head.x >= canvas.width / tileSize || head.y < 0 || head.y >= canvas.height / tileSize || snake.some((segment, idx) => idx !== 0 && segment.x === head.x && segment.y === head.y)) {
         clearInterval(gameInterval);
         alert("Game Over!");
     }
-}
+};
 
-function startGame() {
+// Start the game loop
+const startGame = () => {
     if (!gameInterval) {
         gameInterval = setInterval(draw, 100); // Start the game loop
     }
-}
+};
 
-// Ensure the game starts only after everything is ready
-window.onload = function() {
+// Ensure the game runs after everything is loaded
+window.onload = () => {
     setControls();
     startGame();
 };
