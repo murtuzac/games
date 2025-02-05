@@ -29,6 +29,29 @@ document.addEventListener("keydown", (event) => {
     paddleRight.style.top = paddleRightY + "px";
 });
 
+// Touch movement for mobile
+touchMove = (event, paddle) => {
+    let touch = event.touches[0];
+    let gameRect = game.getBoundingClientRect();
+    let paddleY = touch.clientY - gameRect.top - 40;
+    paddleY = Math.max(10, Math.min(310, paddleY));
+    if (paddle === "left") paddleLeftY = paddleY;
+    if (paddle === "right") paddleRightY = paddleY;
+    
+    paddleLeft.style.top = paddleLeftY + "px";
+    paddleRight.style.top = paddleRightY + "px";
+};
+
+paddleLeft.addEventListener("touchmove", (event) => {
+    event.preventDefault();
+    touchMove(event, "left");
+});
+
+paddleRight.addEventListener("touchmove", (event) => {
+    event.preventDefault();
+    touchMove(event, "right");
+});
+
 // Ball movement logic
 function updateBall() {
     ballX += ballSpeedX * speedMultiplier;
@@ -80,3 +103,4 @@ function resetBall() {
 
 // Start game loop
 setInterval(updateBall, 20);
+
