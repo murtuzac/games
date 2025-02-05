@@ -1,6 +1,11 @@
 const canvas = document.getElementById("snakeCanvas");
 const ctx = canvas.getContext("2d");
 
+// Check if the canvas is properly initialized
+if (!canvas || !ctx) {
+    console.error("Canvas or context not found!");
+}
+
 const tileSize = 20;
 let snake = [{x: 5, y: 5}];
 let direction = "RIGHT";
@@ -35,8 +40,9 @@ function setDirection(newDirection) {
 
 // Draw the game board
 function draw() {
+    // Make sure the canvas is getting cleared
     ctx.clearRect(0, 0, canvas.width, canvas.height);
-
+    
     // Draw snake
     snake.forEach((segment, index) => {
         ctx.fillStyle = index === 0 ? "green" : "blue";
@@ -70,8 +76,13 @@ function draw() {
 }
 
 function startGame() {
-    gameInterval = setInterval(draw, 100);
+    if (!gameInterval) {
+        gameInterval = setInterval(draw, 100); // Start the game loop
+    }
 }
 
-setControls();
-startGame();
+// Ensure the game starts only after everything is ready
+window.onload = function() {
+    setControls();
+    startGame();
+};
