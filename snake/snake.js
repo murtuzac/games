@@ -48,6 +48,15 @@ function draw() {
         ctx.fillRect(segment.x, segment.y, box, box);
         ctx.strokeStyle = "black";
         ctx.strokeRect(segment.x, segment.y, box, box);
+
+    // 🟡 Draw black dot on snake head
+        if (index === 0) { 
+            ctx.fillStyle = "black";
+            ctx.beginPath();
+            ctx.arc(segment.x + box / 2, segment.y + box / 2, box / 5, 0, Math.PI * 2);
+            ctx.fill();
+        }
+        
     });
 
     // 🏃 Move the snake
@@ -86,7 +95,7 @@ function draw() {
 
 // 🎭 Show Game Over Message
 function showGameOver() {
-    ctx.fillStyle = "black";
+    ctx.fillStyle = "red";
     ctx.font = "30px Arial";
     ctx.fillText("Game Over!", canvas.width / 4, canvas.height / 2);
 }
