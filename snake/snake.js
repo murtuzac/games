@@ -86,7 +86,9 @@ function draw() {
 }
 
 function showGameOver() {
-    ctx.fillStyle = "black";
+    ctx.fillStyle = "red";
     ctx.font = "30px Arial";
-    ctx.fillText("Game Over!", canvas.width / 4, canvas.height / 2);
+    ctx.fillText( "Game Over!", canvas.width / 4, canvas.height / 2);
+}
+
 }
