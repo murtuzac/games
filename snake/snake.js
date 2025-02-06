@@ -46,12 +46,12 @@ function draw() {
     ctx.fillStyle = "green";
     snake.forEach((segment, index) => {
         ctx.fillRect(segment.x, segment.y, box, box);
-        ctx.strokeStyle = "green";
+        ctx.strokeStyle = "black";
         ctx.strokeRect(segment.x, segment.y, box, box);
 
     // 🟡 Draw black dot on snake head
         if (index === 0) { 
-            ctx.fillStyle = "blue";
+            ctx.fillStyle = "green";
             ctx.beginPath();
             ctx.arc(segment.x + box / 2, segment.y + box / 2, box / 5, 0, Math.PI * 2);
             ctx.fill();
