@@ -3,7 +3,7 @@ const ctx = canvas.getContext("2d");
 
 const box = 20;
 let snake = [{ x: 10 * box, y: 10 * box }];
-let direction = null; // Start with no direction
+let direction = "RIGHT"; // Default direction to make the snake move initially
 let food = {
     x: Math.floor(Math.random() * 20) * box,
     y: Math.floor(Math.random() * 20) * box
@@ -12,9 +12,12 @@ let gameStarted = false;
 let gameInterval = null;
 let gameOver = false;
 
-// Draw the initial state before any key is pressed
-draw();
+// Wait for the page to fully load before starting the game
+window.onload = function () {
+    draw();
+};
 
+// Listen for keypresses
 document.addEventListener("keydown", startGame);
 
 function startGame(event) {
@@ -88,7 +91,5 @@ function draw() {
 function showGameOver() {
     ctx.fillStyle = "black";
     ctx.font = "30px Arial";
-    ctx.fillText( "Game Over!", canvas.width / 4, canvas.height / 2);
-}
-
+    ctx.fillText("Game Over!", canvas.width / 4, canvas.height / 2);
 }
