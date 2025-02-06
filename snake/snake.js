@@ -106,35 +106,27 @@ function showGameOver() {
     ctx.font = "30px Arial";
     ctx.fillText("Game Over!", canvas.width / 4, canvas.height / 2);
 
-    // Create buttons dynamically
-    const gameContainer = document.body;
+    document.getElementById("retryBtn").style.display = "inline-block";
+    document.getElementById("exitBtn").style.display = "inline-block";
+}
 
-    // Remove existing buttons (if any)
-    const oldButtons = document.querySelectorAll(".game-button");
-    oldButtons.forEach(btn => btn.remove());
+function restartGame() {
+    snake = [{ x: 10 * box, y: 10 * box }];
+    direction = "RIGHT";
+    food = {
+        x: Math.floor(Math.random() * 20) * box,
+        y: Math.floor(Math.random() * 20) * box
+    };
+    gameStarted = false;
+    gameOver = false;
+    document.getElementById("retryBtn").style.display = "none";
+    document.getElementById("exitBtn").style.display = "none";
+    clearInterval(gameInterval);
+    draw();
+}
 
-    // Retry Button
-    const retryButton = document.createElement("button");
-    retryButton.textContent = "Retry";
-    retryButton.classList.add("game-button");
-    retryButton.onclick = resetGame;
-    gameContainer.appendChild(retryButton);
-
-    // Exit Button
-    const exitButton = document.createElement("button");
-    exitButton.textContent = "Exit";
-    exitButton.classList.add("game-button");
-    exitButton.onclick = () => location.reload(); // Refresh page
-    gameContainer.appendChild(exitButton);
-
-    // Style buttons
-    document.querySelectorAll(".game-button").forEach(button => {
-        button.style.display = "block";
-        button.style.margin = "10px auto";
-        button.style.padding = "10px 20px";
-        button.style.fontSize = "18px";
-        button.style.cursor = "pointer";
-    });
+function exitGame() {
+    
 }
 
 // 🛠️ Run draw() once to show initial state
