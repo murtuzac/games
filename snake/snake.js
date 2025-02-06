@@ -94,10 +94,47 @@ function draw() {
 }
 
 // 🎭 Show Game Over Message
-function showGameOver() {
+/* function showGameOver() {
     ctx.fillStyle = "red";
     ctx.font = "30px Arial";
     ctx.fillText("Game Over!", canvas.width / 4, canvas.height / 2);
+}
+*/
+
+function showGameOver() {
+    ctx.fillStyle = "black";
+    ctx.font = "30px Arial";
+    ctx.fillText("Game Over!", canvas.width / 4, canvas.height / 2);
+
+    // Create buttons dynamically
+    const gameContainer = document.body;
+
+    // Remove existing buttons (if any)
+    const oldButtons = document.querySelectorAll(".game-button");
+    oldButtons.forEach(btn => btn.remove());
+
+    // Retry Button
+    const retryButton = document.createElement("button");
+    retryButton.textContent = "Retry";
+    retryButton.classList.add("game-button");
+    retryButton.onclick = resetGame;
+    gameContainer.appendChild(retryButton);
+
+    // Exit Button
+    const exitButton = document.createElement("button");
+    exitButton.textContent = "Exit";
+    exitButton.classList.add("game-button");
+    exitButton.onclick = () => location.reload(); // Refresh page
+    gameContainer.appendChild(exitButton);
+
+    // Style buttons
+    document.querySelectorAll(".game-button").forEach(button => {
+        button.style.display = "block";
+        button.style.margin = "10px auto";
+        button.style.padding = "10px 20px";
+        button.style.fontSize = "18px";
+        button.style.cursor = "pointer";
+    });
 }
 
 // 🛠️ Run draw() once to show initial state
