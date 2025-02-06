@@ -12,12 +12,27 @@
         canvas {
             border: 2px solid black;
         }
+        .controls {
+            margin-top: 10px;
+        }
+        button {
+            padding: 10px;
+            font-size: 16px;
+            margin: 5px;
+            cursor: pointer;
+        }
     </style>
 </head>
 <body>
     <h1>🐍 Snake Game</h1>
     <canvas id="gameCanvas" width="400" height="400"></canvas>
-    <p>Use arrow keys to move the snake</p>
+    <p>Use arrow keys or swipe to move the snake</p>
+
+    <div class="controls">
+        <button id="retryBtn" onclick="restartGame()" style="display: none;">Retry</button>
+        <button id="exitBtn" onclick="exitGame()" style="display: none;">Exit</button>
+    </div>
+
     <script src="./snake.js"></script>
 </body>
 </html>
