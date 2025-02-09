@@ -15,32 +15,45 @@
         .controls {
             margin-top: 10px;
         }
+        .buttons {
+            display: grid;
+            grid-template-columns: repeat(3, 60px);
+            gap: 5px;
+            justify-content: center;
+            margin-top: 10px;
+        }
         button {
-            padding: 10px;
+            padding: 15px;
             font-size: 16px;
-            margin: 5px;
             cursor: pointer;
+        }
+        .center {
+            visibility: hidden;
         }
     </style>
 </head>
 <body>
     <h1>🐍 Snake Game</h1>
     <canvas id="gameCanvas" width="400" height="400"></canvas>
-    <p>Use arrow keys to move the snake</p>
+    <p>Use arrow keys or the buttons below to move the snake</p>
 
-    <div class='controls'>
-        <button onclick="changeDirection({keyCode: 38})">⬆️</button>
-        <br>
-        <button onclick="changeDirection({keyCode: 37})">⬅️</button>
-        <button onclick="changeDirection({keyCode: 40})">⬇️</button>
-        <button onclick="changeDirection({keyCode: 39})">➡️</button>
+    <div class="buttons">
+        <button class="center"></button>
+        <button id="upBtn">⬆️</button>
+        <button class="center"></button>
+        <button id="leftBtn">⬅️</button>
+        <button class="center"></button>
+        <button id="rightBtn">➡️</button>
+        <button class="center"></button>
+        <button id="downBtn">⬇️</button>
+        <button class="center"></button>
     </div>
-    
-    <div class="mainbuttons">
+
+    <div class="controls">
         <button id="retryBtn" onclick="restartGame()" style="display: none;">Retry</button>
         <button onclick="window.location.href='../index.html'">Exit</button>
-    </div>
+    </div>    
 
-    <script src="./snake.js"></script>
+    <script src="snake.js"></script>
 </body>
 </html>
