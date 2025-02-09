@@ -108,17 +108,6 @@ function restartGame() {
     draw();
 }
 
-// Add arrow control buttons
-document.body.insertAdjacentHTML("beforeend", `
-    <div class='controls'>
-        <button onclick="changeDirection({keyCode: 38})">⬆️</button>
-        <br>
-        <button onclick="changeDirection({keyCode: 37})">⬅️</button>
-        <button onclick="changeDirection({keyCode: 40})">⬇️</button>
-        <button onclick="changeDirection({keyCode: 39})">➡️</button>
-    </div>
-`);
-
 window.onload = function () {
     draw();
 };
