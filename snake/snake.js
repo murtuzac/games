@@ -11,13 +11,9 @@ let food = {
 let gameStarted = false;
 let gameInterval = null;
 let gameOver = false;
-let touchStartX = 0;
-let touchStartY = 0;
 
 // Start the game when a key is pressed
 document.addEventListener("keydown", startGame);
-canvas.addEventListener("touchstart", handleTouchStart, false);
-canvas.addEventListener("touchmove", handleTouchMove, false);
 
 function startGame(event) {
     if (!gameStarted) {
@@ -35,28 +31,6 @@ function changeDirection(event) {
     if (key === 40 && direction !== "UP") direction = "DOWN";
 }
 
-function handleTouchStart(event) {
-    const touch = event.touches[0];
-    touchStartX = touch.clientX;
-    touchStartY = touch.clientY;
-}
-
-function handleTouchMove(event) {
-    if (!gameStarted) return;
-    event.preventDefault();
-    const touch = event.touches[0];
-    const deltaX = touch.clientX - touchStartX;
-    const deltaY = touch.clientY - touchStartY;
-
-    if (Math.abs(deltaX) > Math.abs(deltaY)) {
-        if (deltaX > 0 && direction !== "LEFT") direction = "RIGHT";
-        else if (deltaX < 0 && direction !== "RIGHT") direction = "LEFT";
-    } else {
-        if (deltaY > 0 && direction !== "UP") direction = "DOWN";
-        else if (deltaY < 0 && direction !== "DOWN") direction = "UP";
-    }
-}
-
 function draw() {
     if (gameOver) return;
 
@@ -67,15 +41,18 @@ function draw() {
     ctx.fillRect(food.x, food.y, box, box);
 
     // Draw snake
-    ctx.fillStyle = "green";
     snake.forEach((segment, index) => {
+        ctx.fillStyle = "green";
         ctx.fillRect(segment.x, segment.y, box, box);
         ctx.strokeStyle = "black";
         ctx.strokeRect(segment.x, segment.y, box, box);
         if (index === 0) {
             ctx.fillStyle = "black";
+            ctx.fillRect(segment.x, segment.y, box, box);
+            ctx.fillStyle = "green";
             ctx.beginPath();
-            ctx.arc(segment.x + box / 2, segment.y + box / 2, box / 5, 0, Math.PI * 2);
+            ctx.arc(segment.x + 6, segment.y + 6, 3, 0, Math.PI * 2);
+            ctx.arc(segment.x + 14, segment.y + 6, 3, 0, Math.PI * 2);
             ctx.fill();
         }
     });
@@ -130,6 +107,17 @@ function restartGame() {
     clearInterval(gameInterval);
     draw();
 }
+
+// Add arrow control buttons
+document.body.insertAdjacentHTML("beforeend", `
+    <div class='controls'>
+        <button onclick="changeDirection({keyCode: 38})">⬆️</button>
+        <br>
+        <button onclick="changeDirection({keyCode: 37})">⬅️</button>
+        <button onclick="changeDirection({keyCode: 40})">⬇️</button>
+        <button onclick="changeDirection({keyCode: 39})">➡️</button>
+    </div>
+`);
 
 window.onload = function () {
     draw();
