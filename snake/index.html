@@ -52,9 +52,18 @@
             background-color: #0056b3; /* Darker blue on hover */
         }  
 
+        /* Updated styles for Retry and Exit buttons */
         #retryBtn, #exitBtn {
-            font-size: 20px; /* Reduced font size */
-            padding: 15px 25px; /* Adjusted padding */
+            font-size: 16px; /* Normal font size */
+            padding: 10px 20px; /* Adjusted padding */
+            background-color: #d3d3d3; /* Light grey background */
+            color: black; /* Black text color */
+            border-radius: 5px; /* Slightly rounded corners */
+            border: 1px solid #ccc; /* Grey border */
+        }
+        
+        #retryBtn:hover, #exitBtn:hover {
+            background-color: #a9a9a9; /* Darker grey on hover */
         }
         
     </style>
@@ -77,7 +86,7 @@
 
     <div class="controls">
         <button id="retryBtn" onclick="restartGame()" style="display: none;">Retry</button>
-        <button onclick="window.location.href='../index.html'">Exit</button>
+        <button id="exitBtn" onclick="window.location.href='../index.html'">Exit</button>
     </div>
 
     <script src="snake.js"></script>
