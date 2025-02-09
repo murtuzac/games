@@ -2,8 +2,8 @@ const canvas = document.getElementById("gameCanvas");
 const ctx = canvas.getContext("2d");
 
 const box = 20;
-let snake = [{ x: 10 * box, y: 10 * box }]; // 🟢 Snake starts at (10,10)
-let direction = "RIGHT"; // 🟢 Default direction
+let snake = [{ x: 10 * box, y: 10 * box }];
+let direction = "RIGHT";
 let food = {
     x: Math.floor(Math.random() * 20) * box,
     y: Math.floor(Math.random() * 20) * box
@@ -11,19 +11,22 @@ let food = {
 let gameStarted = false;
 let gameInterval = null;
 let gameOver = false;
+let touchStartX = 0;
+let touchStartY = 0;
 
-// 🎯 Start the game when a key is pressed
+// Start the game when a key is pressed
 document.addEventListener("keydown", startGame);
+canvas.addEventListener("touchstart", handleTouchStart, false);
+canvas.addEventListener("touchmove", handleTouchMove, false);
 
 function startGame(event) {
     if (!gameStarted) {
         gameStarted = true;
-        gameInterval = setInterval(draw, 150); // 🕒 Set game loop interval
+        gameInterval = setInterval(draw, 150);
     }
     changeDirection(event);
 }
 
-// 🎮 Change direction
 function changeDirection(event) {
     const key = event.keyCode;
     if (key === 37 && direction !== "RIGHT") direction = "LEFT";
@@ -32,34 +35,51 @@ function changeDirection(event) {
     if (key === 40 && direction !== "UP") direction = "DOWN";
 }
 
-// 🎨 Draw the game
+function handleTouchStart(event) {
+    const touch = event.touches[0];
+    touchStartX = touch.clientX;
+    touchStartY = touch.clientY;
+}
+
+function handleTouchMove(event) {
+    if (!gameStarted) return;
+    event.preventDefault();
+    const touch = event.touches[0];
+    const deltaX = touch.clientX - touchStartX;
+    const deltaY = touch.clientY - touchStartY;
+
+    if (Math.abs(deltaX) > Math.abs(deltaY)) {
+        if (deltaX > 0 && direction !== "LEFT") direction = "RIGHT";
+        else if (deltaX < 0 && direction !== "RIGHT") direction = "LEFT";
+    } else {
+        if (deltaY > 0 && direction !== "UP") direction = "DOWN";
+        else if (deltaY < 0 && direction !== "DOWN") direction = "UP";
+    }
+}
+
 function draw() {
     if (gameOver) return;
 
-    ctx.clearRect(0, 0, canvas.width, canvas.height); // Clear canvas
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-    // 🍎 Draw food
+    // Draw food
     ctx.fillStyle = "red";
     ctx.fillRect(food.x, food.y, box, box);
 
-    // 🟢 Draw snake
+    // Draw snake
     ctx.fillStyle = "green";
     snake.forEach((segment, index) => {
         ctx.fillRect(segment.x, segment.y, box, box);
         ctx.strokeStyle = "black";
         ctx.strokeRect(segment.x, segment.y, box, box);
-
-    // 🟡 Draw black dot on snake head
-        if (index === 0) { 
-            ctx.fillStyle = "green";
+        if (index === 0) {
+            ctx.fillStyle = "black";
             ctx.beginPath();
             ctx.arc(segment.x + box / 2, segment.y + box / 2, box / 5, 0, Math.PI * 2);
             ctx.fill();
         }
-        
     });
 
-    // 🏃 Move the snake
     let newX = snake[0].x;
     let newY = snake[0].y;
 
@@ -68,17 +88,15 @@ function draw() {
     if (direction === "RIGHT") newX += box;
     if (direction === "DOWN") newY += box;
 
-    // 🚀 Check collision with food
     if (newX === food.x && newY === food.y) {
         food = {
             x: Math.floor(Math.random() * 20) * box,
             y: Math.floor(Math.random() * 20) * box
         };
     } else {
-        snake.pop(); // Remove last segment unless eating
+        snake.pop();
     }
 
-    // 🚧 Check collision with walls or itself
     if (
         newX < 0 || newY < 0 || newX >= canvas.width || newY >= canvas.height ||
         snake.some(segment => segment.x === newX && segment.y === newY)
@@ -89,25 +107,14 @@ function draw() {
         return;
     }
 
-    // ➕ Add new head
     snake.unshift({ x: newX, y: newY });
 }
-
-// 🎭 Show Game Over Message
-/* function showGameOver() {
-    ctx.fillStyle = "red";
-    ctx.font = "30px Arial";
-    ctx.fillText("Game Over!", canvas.width / 4, canvas.height / 2);
-}
-*/
 
 function showGameOver() {
     ctx.fillStyle = "red";
     ctx.font = "30px Arial";
     ctx.fillText("Game Over!", canvas.width / 4, canvas.height / 2);
-
     document.getElementById("retryBtn").style.display = "inline-block";
-    document.getElementById("exitBtn").style.display = "inline-block";
 }
 
 function restartGame() {
@@ -120,16 +127,10 @@ function restartGame() {
     gameStarted = false;
     gameOver = false;
     document.getElementById("retryBtn").style.display = "none";
-    document.getElementById("exitBtn").style.display = "none";
     clearInterval(gameInterval);
     draw();
 }
 
-function exitGame() {
-    
-}
-
-// 🛠️ Run draw() once to show initial state
 window.onload = function () {
     draw();
 };
