@@ -70,6 +70,10 @@
 </head>
 <body>
     <h1>🐍 Snake Game</h1>
+    <div class="controls">
+        <button id="retryBtn" onclick="restartGame()" style="display: none;">Retry</button>
+        <button id="exitBtn" onclick="window.location.href='../index.html'">Exit</button>
+    </div>
     <canvas id="gameCanvas" width="400" height="400"></canvas>
     <p>Use arrow keys or on-screen buttons to move the snake</p>
 
@@ -82,11 +86,6 @@
             <button onclick="startGame(); changeDirection('DOWN')">⬇️</button>
             <button onclick="startGame(); changeDirection('RIGHT')">➡️</button>
         </div>
-    </div>
-
-    <div class="controls">
-        <button id="retryBtn" onclick="restartGame()" style="display: none;">Retry</button>
-        <button id="exitBtn" onclick="window.location.href='../index.html'">Exit</button>
     </div>
 
     <script src="snake.js"></script>
