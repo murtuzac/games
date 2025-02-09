@@ -12,8 +12,12 @@ let gameStarted = false;
 let gameInterval = null;
 let gameOver = false;
 
-// Start the game when a key is pressed
 document.addEventListener("keydown", startGame);
+
+document.getElementById("upBtn").addEventListener("click", () => changeDirection({ keyCode: 38 }));
+document.getElementById("leftBtn").addEventListener("click", () => changeDirection({ keyCode: 37 }));
+document.getElementById("downBtn").addEventListener("click", () => changeDirection({ keyCode: 40 }));
+document.getElementById("rightBtn").addEventListener("click", () => changeDirection({ keyCode: 39 }));
 
 function startGame(event) {
     if (!gameStarted) {
@@ -36,11 +40,9 @@ function draw() {
 
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-    // Draw food
     ctx.fillStyle = "red";
     ctx.fillRect(food.x, food.y, box, box);
 
-    // Draw snake
     snake.forEach((segment, index) => {
         ctx.fillStyle = "green";
         ctx.fillRect(segment.x, segment.y, box, box);
