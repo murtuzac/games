@@ -14,11 +14,6 @@ let gameOver = false;
 
 document.addEventListener("keydown", startGame);
 
-document.getElementById("upBtn").addEventListener("click", () => changeDirection({ keyCode: 38 }));
-document.getElementById("leftBtn").addEventListener("click", () => changeDirection({ keyCode: 37 }));
-document.getElementById("downBtn").addEventListener("click", () => changeDirection({ keyCode: 40 }));
-document.getElementById("rightBtn").addEventListener("click", () => changeDirection({ keyCode: 39 }));
-
 function startGame(event) {
     if (!gameStarted) {
         gameStarted = true;
@@ -27,12 +22,11 @@ function startGame(event) {
     changeDirection(event);
 }
 
-function changeDirection(event) {
-    const key = event.keyCode;
-    if (key === 37 && direction !== "RIGHT") direction = "LEFT";
-    if (key === 38 && direction !== "DOWN") direction = "UP";
-    if (key === 39 && direction !== "LEFT") direction = "RIGHT";
-    if (key === 40 && direction !== "UP") direction = "DOWN";
+function changeDirection(keyCode) {
+    if (keyCode === 37 && direction !== "RIGHT") direction = "LEFT";
+    if (keyCode === 38 && direction !== "DOWN") direction = "UP";
+    if (keyCode === 39 && direction !== "LEFT") direction = "RIGHT";
+    if (keyCode === 40 && direction !== "UP") direction = "DOWN";
 }
 
 function draw() {
