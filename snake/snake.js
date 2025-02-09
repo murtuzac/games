@@ -14,10 +14,10 @@ let gameOver = false;
 
 document.addEventListener("keydown", startGame);
 
-document.getElementById("upBtn").addEventListener("click", changeDirection);
-document.getElementById("leftBtn").addEventListener("click", changeDirection);
-document.getElementById("downBtn").addEventListener("click", changeDirection);
-document.getElementById("rightBtn").addEventListener("click", changeDirection);
+document.getElementById("upBtn").addEventListener("click", () => changeDirection({ keyCode: 38 }));
+document.getElementById("leftBtn").addEventListener("click", () => changeDirection({ keyCode: 37 }));
+document.getElementById("downBtn").addEventListener("click", () => changeDirection({ keyCode: 40 }));
+document.getElementById("rightBtn").addEventListener("click", () => changeDirection({ keyCode: 39 }));
 
 function startGame(event) {
     if (!gameStarted) {
