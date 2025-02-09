@@ -11,43 +11,49 @@
         }
         canvas {
             border: 2px solid black;
+            display: block;
+            margin: auto;
         }
         .controls {
             margin-top: 10px;
         }
-        .buttons {
-            display: grid;
-            grid-template-columns: repeat(3, 60px);
-            gap: 5px;
-            justify-content: center;
-            margin-top: 10px;
-        }
-        button {
+        .controls button {
             padding: 15px;
-            font-size: 16px;
+            font-size: 20px;
+            margin: 5px;
             cursor: pointer;
         }
-        .center {
-            visibility: hidden;
+        .button-grid {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-top: 10px;
+        }
+        .button-row {
+            display: flex;
         }
     </style>
 </head>
 <body>
     <h1>🐍 Snake Game</h1>
     <canvas id="gameCanvas" width="400" height="400"></canvas>
-    <p>Use arrow keys or the buttons below to move the snake</p>
+    <p>Use arrow keys or on-screen buttons to move the snake</p>
 
-    <div class="buttons">
-        <button onclick="changeDirection(38)">⬆️</button>
-        <button onclick="changeDirection(37)">⬅️</button>
-        <button onclick="changeDirection(40)">⬇️</button>
-        <button onclick="changeDirection(39)">➡️</button>
+    <div class="button-grid">
+        <div class="button-row">
+            <button onclick="changeDirection('UP')">⬆️</button>
+        </div>
+        <div class="button-row">
+            <button onclick="changeDirection('LEFT')">⬅️</button>
+            <button onclick="changeDirection('DOWN')">⬇️</button>
+            <button onclick="changeDirection('RIGHT')">➡️</button>
+        </div>
     </div>
-   
+
     <div class="controls">
         <button id="retryBtn" onclick="restartGame()" style="display: none;">Retry</button>
         <button onclick="window.location.href='../index.html'">Exit</button>
-    </div>    
+    </div>
 
     <script src="snake.js"></script>
 </body>
