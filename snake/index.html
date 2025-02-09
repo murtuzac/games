@@ -38,17 +38,12 @@
     <p>Use arrow keys or the buttons below to move the snake</p>
 
     <div class="buttons">
-        <button class="center"></button>
-        <button id="upBtn" data-key="38">⬆️</button>
-        <button class="center"></button>
-        <button id="leftBtn" data-key="37">⬅️</button>
-        <button class="center"></button>
-        <button id="rightBtn" data-key="39">➡️</button>
-        <button class="center"></button>
-        <button id="downBtn" data-key="40">⬇️</button>
-        <button class="center"></button>        
+        <button onclick="changeDirection(38)">⬆️</button>
+        <button onclick="changeDirection(37)">⬅️</button>
+        <button onclick="changeDirection(40)">⬇️</button>
+        <button onclick="changeDirection(39)">➡️</button>
     </div>
-
+   
     <div class="controls">
         <button id="retryBtn" onclick="restartGame()" style="display: none;">Retry</button>
         <button onclick="window.location.href='../index.html'">Exit</button>
