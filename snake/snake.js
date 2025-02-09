@@ -14,12 +14,16 @@ let gameOver = false;
 
 // Start the game on key press
 document.addEventListener("keydown", (event) => {
+    startGame();
+    handleDirection(event.keyCode);
+});
+
+function startGame() {
     if (!gameStarted) {
         gameStarted = true;
         gameInterval = setInterval(draw, 150);
     }
-    handleDirection(event.keyCode);
-});
+}
 
 // Handle on-screen button presses
 function changeDirection(dir) {
