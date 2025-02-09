@@ -21,7 +21,7 @@ document.addEventListener("keydown", (event) => {
 function startGame() {
     if (!gameStarted) {
         gameStarted = true;
-        gameInterval = setInterval(draw, 200);
+        gameInterval = setInterval(draw, 250);
     }
 }
 
