@@ -83,7 +83,15 @@
                 event.target.textContent = currentPlayer;
                 event.target.classList.add(currentPlayer);
                 if (checkWin()) {
-                    document.getElementById("status").textContent = `${currentPlayer} Wins!`;
+                    /* document.getElementById("status").textContent = `${currentPlayer} wins!`; */
+                    if (currentPlayer === "O")
+                    {
+                        document.getElementById("status").textContent = `CPU's wins`;
+                    }
+                    else
+                    {
+                        document.getElementById("status").textContent = `You've have won`;
+                    }
                     gameActive = false;
                     return;
                 }
@@ -110,7 +118,7 @@
                 cell.textContent = "O";
                 cell.classList.add("O");
                 if (checkWin()) {
-                    document.getElementById("status").textContent = "CPU Wins!";
+                    document.getElementById("status").textContent = "CPU wins!";
                     gameActive = false;
                     return;
                 }
