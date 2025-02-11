@@ -74,3 +74,28 @@ button {
     font-size: 16px;
     cursor: pointer;
 }
+
+.game-header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px; /* Space between items */
+    margin-bottom: 10px;
+}
+
+/* Updated styles for Retry and Exit buttons */
+#retryBtn, #exitBtn {
+    width: 80px;  /* Reduced width */
+    height: 40px; /* Reduced height */
+    border-radius: 5px; /* Slightly smaller border-radius */
+    font-size: 14px;  /* Adjust font size if needed */            
+    padding: 8px 16px; /* Even smaller padding */
+    background-color: #d3d3d3; /* Light grey background */
+    color: black; /* Black text color */
+    border-radius: 5px; /* Slightly rounded corners */
+    border: 1px solid #ccc; /* Grey border */
+}
+
+#retryBtn:hover, #exitBtn:hover {
+    background-color: #a9a9a9; /* Darker grey on hover */
+}
