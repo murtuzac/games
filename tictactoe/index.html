@@ -93,7 +93,7 @@
                     return;
                 }
                 currentPlayer = currentPlayer === "X" ? "O" : "X";
-                if (currentPlayer === "O") setTimeout(cpuMove, 500);
+                if (currentPlayer === "O") setTimeout(cpuMove, 700);
             }
         }
 
@@ -172,7 +172,7 @@
             currentPlayer = playerSymbol;
             document.getElementById("status").textContent = `${playerSymbol}'s Turn`;
             createBoard();
-            if (currentPlayer === "O") setTimeout(cpuMove, 500);
+            if (currentPlayer === "O") setTimeout(cpuMove, 700);
         }
 
         function setDifficulty(level) {
@@ -189,6 +189,12 @@
             resetGame();
         }
 
+        // Highlight default buttons on page load
+        window.onload = function() {
+            setDifficulty('easy');  // Default to Easy
+            setPlayer('X');         // Default to Player X
+        }
+        
         createBoard();
     </script>
 </body>
