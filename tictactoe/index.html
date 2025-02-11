@@ -55,7 +55,7 @@
     <p id="status">Select difficulty and starting player</p>
     <div class="board" id="board"></div>
     <button onclick="resetGame()">Restart</button>
-    <button onclick="exitGame()">Exit</button>
+    <button onclick="window.location.href='../index.html'">Exit</button>
     <script>
         let currentPlayer = "X";
         let gameBoard = Array(9).fill("");
@@ -173,13 +173,6 @@
             document.getElementById("status").textContent = `${playerSymbol}'s Turn`;
             createBoard();
             if (currentPlayer === "O") setTimeout(cpuMove, 500);
-        }
-
-        function exitGame() {
-            gameBoard.fill("");
-            gameActive = false;
-            document.getElementById("status").textContent = "Game Exited. Select options to start again.";
-            createBoard();
         }
 
         function setDifficulty(level) {
