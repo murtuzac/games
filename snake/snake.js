@@ -1,8 +1,6 @@
 const canvas = document.getElementById("gameCanvas");
 const ctx = canvas.getContext("2d");
-const scoreDisplay = document.createElement("p");
-scoreDisplay.style.fontSize = "20px";
-document.body.insertBefore(scoreDisplay, canvas);
+const scoreDisplay = document.getElementById("scoreDisplay");
 
 const box = 20;
 let snake = [{ x: 10 * box, y: 10 * box }];
@@ -78,7 +76,7 @@ function draw() {
     if (direction === "DOWN") newY += box;
 
     if (newX === food.x && newY === food.y) {
-        score += 10;
+        score += 1;
         food = {
             x: Math.floor(Math.random() * 20) * box,
             y: Math.floor(Math.random() * 20) * box
