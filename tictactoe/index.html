@@ -86,11 +86,11 @@
                     /* document.getElementById("status").textContent = `${currentPlayer} wins!`; */
                     if (currentPlayer === "O")
                     {
-                        document.getElementById("status").textContent = `CPU's wins`;
+                        document.getElementById("status").textContent = `CPU's wins!`;
                     }
                     else
                     {
-                        document.getElementById("status").textContent = `You've have won`;
+                        document.getElementById("status").textContent = `You've have won!`;
                     }
                     gameActive = false;
                     return;
@@ -185,11 +185,11 @@
             currentPlayer = playerSymbol;
             if (currentPlayer === "O")
             {
-                document.getElementById("status").textContent = `CPU's Turn`;
+                document.getElementById("status").textContent = `CPU's Turn!`;
             }
             else
             {
-                document.getElementById("status").textContent = `Your Turn`;
+                document.getElementById("status").textContent = `Your Turn!`;
             }
             createBoard();
             if (currentPlayer === "O") setTimeout(cpuMove, 700);
