@@ -95,7 +95,7 @@
                 currentPlayer = currentPlayer === "X" ? "O" : "X";
                 if (currentPlayer === "O") 
                 {
-                    document.getElementById("status").textContent = `${currentPlayer}'s turn!`;
+                    document.getElementById("status").textContent = `CPU's turn!`;
                     setTimeout(cpuMove, 700);
                 }
             }
@@ -175,7 +175,14 @@
             gameBoard.fill("");
             gameActive = true;
             currentPlayer = playerSymbol;
-            document.getElementById("status").textContent = `${playerSymbol}'s Turn`;
+            if (currentPlayer === "O")
+            {
+                document.getElementById("status").textContent = `CPU's Turn`;
+            }
+            else
+            {
+                document.getElementById("status").textContent = `Your Turn`;
+            }
             createBoard();
             if (currentPlayer === "O") setTimeout(cpuMove, 700);
         }
