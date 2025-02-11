@@ -9,16 +9,10 @@
             font-family: Arial, sans-serif;
             text-align: center;
         }
-
-        h1 {
-            font-size: 24px;
+        .selected {
+            background-color: #4CAF50;
+            color: white;
         }
-
-        #status {
-            font-size: 1.2em;
-            margin: 10px;
-        }
-
         .board {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
@@ -30,7 +24,6 @@
             max-height: 400px;
             margin: 20px auto;
         }
-
         .cell {
             display: flex;
             align-items: center;
@@ -41,39 +34,38 @@
             border: 2px solid black;
             background-color: #f9f9f9;
             cursor: pointer;
-            touch-action: manipulation;
         }
-
-        .cell:active {
-            background-color: #ddd;
-        }
-
+        .cell.X { color: darkred; }
+        .cell.O { color: darkgreen; }
         button {
-            padding: 12px 18px;
-            font-size: 1.2em;
+            padding: 10px 15px;
+            font-size: 1em;
             cursor: pointer;
-            margin-top: 10px;
+            margin: 5px;
         }
     </style>
 </head>
 <body>
-
     <h1>Tic-Tac-Toe vs CPU</h1>
-    <p id="status">Your turn (X)</p>
-
+    <button id="easy" onclick="setDifficulty('easy')">Easy</button>
+    <button id="hard" onclick="setDifficulty('hard')">Hard</button>
+    <br>
+    <button id="playerX" onclick="setPlayer('X')">Player = X</button>
+    <button id="playerO" onclick="setPlayer('O')">Player = O</button>
+    <p id="status">Select difficulty and starting player</p>
     <div class="board" id="board"></div>
-
-    <button onclick="resetGame()">Restart Game</button>
-
+    <button onclick="resetGame()">Restart</button>
+    <button onclick="exitGame()">Exit</button>
     <script>
-        let currentPlayer = "X"; // You are always X, CPU is O
-        let gameBoard = ["", "", "", "", "", "", "", "", ""];
-        let gameActive = true;
+        let currentPlayer = "X";
+        let gameBoard = Array(9).fill("");
+        let gameActive = false;
+        let difficulty = "easy";
+        let playerSymbol = "X";
 
         function createBoard() {
             const board = document.getElementById("board");
-            board.innerHTML = ""; // Clear previous cells
-
+            board.innerHTML = "";
             for (let i = 0; i < 9; i++) {
                 const cell = document.createElement("div");
                 cell.classList.add("cell");
@@ -84,53 +76,55 @@
         }
 
         function handleMove(event) {
+            if (!gameActive) return;
             const index = event.target.dataset.index;
-            if (gameBoard[index] === "" && gameActive && currentPlayer === "X") {
-                gameBoard[index] = "X";
-                event.target.textContent = "X";
-
+            if (gameBoard[index] === "") {
+                gameBoard[index] = currentPlayer;
+                event.target.textContent = currentPlayer;
+                event.target.classList.add(currentPlayer);
                 if (checkWin()) {
-                    document.getElementById("status").textContent = "You Win!";
+                    document.getElementById("status").textContent = `${currentPlayer} Wins!`;
                     gameActive = false;
                     return;
-                } else if (!gameBoard.includes("")) {
+                }
+                if (!gameBoard.includes("")) {
                     document.getElementById("status").textContent = "It's a Draw!";
                     gameActive = false;
                     return;
                 }
-
-                currentPlayer = "O";
-                document.getElementById("status").textContent = "CPU's turn...";
-                setTimeout(cpuMove, 800);
+                currentPlayer = currentPlayer === "X" ? "O" : "X";
+                if (currentPlayer === "O") setTimeout(cpuMove, 500);
             }
         }
 
         function cpuMove() {
             if (!gameActive) return;
-
-            let bestMove = findBestMove();
-
-            if (bestMove !== null) {
-                gameBoard[bestMove] = "O";
-                let cell = document.querySelector(`[data-index='${bestMove}']`);
+            let move = difficulty === "easy" ? getRandomMove() : getBestMove();
+            if (move !== null) {
+                gameBoard[move] = "O";
+                let cell = document.querySelector(`[data-index='${move}']`);
                 cell.textContent = "O";
-
+                cell.classList.add("O");
                 if (checkWin()) {
                     document.getElementById("status").textContent = "CPU Wins!";
                     gameActive = false;
                     return;
-                } else if (!gameBoard.includes("")) {
+                }
+                if (!gameBoard.includes("")) {
                     document.getElementById("status").textContent = "It's a Draw!";
                     gameActive = false;
                     return;
                 }
-
                 currentPlayer = "X";
-                document.getElementById("status").textContent = "Your turn (X)";
             }
         }
 
-        function findBestMove() {
+        function getRandomMove() {
+            let emptyCells = gameBoard.map((v, i) => v === "" ? i : null).filter(v => v !== null);
+            return emptyCells.length ? emptyCells[Math.floor(Math.random() * emptyCells.length)] : null;
+        }
+
+        function getBestMove() {
             const winPatterns = [
                 [0, 1, 2], [3, 4, 5], [6, 7, 8], // Rows
                 [0, 3, 6], [1, 4, 7], [2, 5, 8], // Columns
@@ -168,28 +162,41 @@
         }
 
         function checkWin() {
-            const winPatterns = [
-                [0, 1, 2], [3, 4, 5], [6, 7, 8], // Rows
-                [0, 3, 6], [1, 4, 7], [2, 5, 8], // Columns
-                [0, 4, 8], [2, 4, 6]            // Diagonals
-            ];
-            return winPatterns.some(pattern =>
-                gameBoard[pattern[0]] !== "" &&
-                gameBoard[pattern[0]] === gameBoard[pattern[1]] &&
-                gameBoard[pattern[0]] === gameBoard[pattern[2]]
-            );
+            const patterns = [[0,1,2],[3,4,5],[6,7,8],[0,3,6],[1,4,7],[2,5,8],[0,4,8],[2,4,6]];
+            return patterns.some(p => gameBoard[p[0]] !== "" && gameBoard[p[0]] === gameBoard[p[1]] && gameBoard[p[1]] === gameBoard[p[2]]);
         }
 
         function resetGame() {
-            gameBoard = ["", "", "", "", "", "", "", "", ""];
+            gameBoard.fill("");
             gameActive = true;
-            currentPlayer = "X";
-            document.getElementById("status").textContent = "Your turn (X)";
+            currentPlayer = playerSymbol;
+            document.getElementById("status").textContent = `${playerSymbol}'s Turn`;
             createBoard();
+            if (currentPlayer === "O") setTimeout(cpuMove, 500);
+        }
+
+        function exitGame() {
+            gameBoard.fill("");
+            gameActive = false;
+            document.getElementById("status").textContent = "Game Exited. Select options to start again.";
+            createBoard();
+        }
+
+        function setDifficulty(level) {
+            difficulty = level;
+            document.getElementById("easy").classList.toggle("selected", level === "easy");
+            document.getElementById("hard").classList.toggle("selected", level === "hard");
+            resetGame();
+        }
+
+        function setPlayer(symbol) {
+            playerSymbol = symbol;
+            document.getElementById("playerX").classList.toggle("selected", symbol === "X");
+            document.getElementById("playerO").classList.toggle("selected", symbol === "O");
+            resetGame();
         }
 
         createBoard();
     </script>
-
 </body>
 </html>
