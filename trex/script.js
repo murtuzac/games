@@ -52,6 +52,7 @@ function gameOver() {
     clearInterval(gameInterval);
     obstacle.style.animation = "none"; // Stop obstacle movement
     gameOverMessage.classList.remove("hidden"); // Show Game Over message
+    document.getElementById("retryBtn").style.display = "inline-block";
 }
 
 // ⚠ Collision Detection
@@ -67,4 +68,8 @@ function checkCollision() {
         score++;
         scoreDisplay.innerText = "Score: " + score;
     }
+}
+
+function restartGame() {
+startGame();
 }
