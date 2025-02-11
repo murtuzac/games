@@ -1,5 +1,8 @@
 const canvas = document.getElementById("gameCanvas");
 const ctx = canvas.getContext("2d");
+const scoreDisplay = document.createElement("p");
+scoreDisplay.style.fontSize = "20px";
+document.body.insertBefore(scoreDisplay, canvas);
 
 const box = 20;
 let snake = [{ x: 10 * box, y: 10 * box }];
@@ -8,6 +11,7 @@ let food = {
     x: Math.floor(Math.random() * 20) * box,
     y: Math.floor(Math.random() * 20) * box
 };
+let score = 0;
 let gameStarted = false;
 let gameInterval = null;
 let gameOver = false;
@@ -25,7 +29,6 @@ function startGame() {
     }
 }
 
-// Handle on-screen button presses
 function changeDirection(dir) {
     if (dir === "LEFT" && direction !== "RIGHT") direction = "LEFT";
     if (dir === "UP" && direction !== "DOWN") direction = "UP";
@@ -33,7 +36,6 @@ function changeDirection(dir) {
     if (dir === "DOWN" && direction !== "UP") direction = "DOWN";
 }
 
-// Handle keyboard input
 function handleDirection(keyCode) {
     if (keyCode === 37) changeDirection("LEFT");
     if (keyCode === 38) changeDirection("UP");
@@ -41,11 +43,11 @@ function handleDirection(keyCode) {
     if (keyCode === 40) changeDirection("DOWN");
 }
 
-// Draw the game
 function draw() {
     if (gameOver) return;
 
     ctx.clearRect(0, 0, canvas.width, canvas.height);
+    scoreDisplay.innerText = `Score: ${score}`;
 
     // Draw food
     ctx.fillStyle = "red";
@@ -58,7 +60,6 @@ function draw() {
         ctx.strokeStyle = "black";
         ctx.strokeRect(segment.x, segment.y, box, box);
 
-        // Draw snake head eyes
         if (index === 0) {
             ctx.fillStyle = "green";
             ctx.beginPath();
@@ -68,7 +69,6 @@ function draw() {
         }
     });
 
-    // Move snake
     let newX = snake[0].x;
     let newY = snake[0].y;
 
@@ -77,8 +77,8 @@ function draw() {
     if (direction === "RIGHT") newX += box;
     if (direction === "DOWN") newY += box;
 
-    // Check collision with food
     if (newX === food.x && newY === food.y) {
+        score += 10;
         food = {
             x: Math.floor(Math.random() * 20) * box,
             y: Math.floor(Math.random() * 20) * box
@@ -87,7 +87,6 @@ function draw() {
         snake.pop();
     }
 
-    // Check collision with walls or itself
     if (
         newX < 0 || newY < 0 || newX >= canvas.width || newY >= canvas.height ||
         snake.some(segment => segment.x === newX && segment.y === newY)
@@ -98,11 +97,9 @@ function draw() {
         return;
     }
 
-    // Add new head
     snake.unshift({ x: newX, y: newY });
 }
 
-// Show Game Over
 function showGameOver() {
     ctx.fillStyle = "red";
     ctx.font = "30px Arial";
@@ -110,7 +107,6 @@ function showGameOver() {
     document.getElementById("retryBtn").style.display = "inline-block";
 }
 
-// Restart game
 function restartGame() {
     snake = [{ x: 10 * box, y: 10 * box }];
     direction = "RIGHT";
@@ -118,6 +114,7 @@ function restartGame() {
         x: Math.floor(Math.random() * 20) * box,
         y: Math.floor(Math.random() * 20) * box
     };
+    score = 0;
     gameStarted = false;
     gameOver = false;
     document.getElementById("retryBtn").style.display = "none";
@@ -125,7 +122,6 @@ function restartGame() {
     draw();
 }
 
-// Run initial draw
 window.onload = function () {
     draw();
 };
