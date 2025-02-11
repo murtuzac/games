@@ -61,9 +61,7 @@
     <h1>Tic-Tac-Toe vs CPU</h1>
     <p id="status">Your turn (X)</p>
 
-    <div class="board" id="board">
-        <!-- Cells will be created dynamically -->
-    </div>
+    <div class="board" id="board"></div>
 
     <button onclick="resetGame()">Restart Game</button>
 
@@ -103,18 +101,18 @@
 
                 currentPlayer = "O";
                 document.getElementById("status").textContent = "CPU's turn...";
-                setTimeout(cpuMove, 500); // Small delay for realism
+                setTimeout(cpuMove, 800);
             }
         }
 
         function cpuMove() {
-            let emptyCells = gameBoard.map((val, i) => val === "" ? i : null).filter(val => val !== null);
+            if (!gameActive) return;
 
-            if (emptyCells.length > 0 && gameActive) {
-                let cpuIndex = emptyCells[Math.floor(Math.random() * emptyCells.length)];
-                gameBoard[cpuIndex] = "O";
+            let bestMove = findBestMove();
 
-                let cell = document.querySelector(`[data-index='${cpuIndex}']`);
+            if (bestMove !== null) {
+                gameBoard[bestMove] = "O";
+                let cell = document.querySelector(`[data-index='${bestMove}']`);
                 cell.textContent = "O";
 
                 if (checkWin()) {
@@ -130,6 +128,43 @@
                 currentPlayer = "X";
                 document.getElementById("status").textContent = "Your turn (X)";
             }
+        }
+
+        function findBestMove() {
+            const winPatterns = [
+                [0, 1, 2], [3, 4, 5], [6, 7, 8], // Rows
+                [0, 3, 6], [1, 4, 7], [2, 5, 8], // Columns
+                [0, 4, 8], [2, 4, 6]            // Diagonals
+            ];
+
+            // 1️⃣ Check if CPU can win
+            for (let pattern of winPatterns) {
+                let [a, b, c] = pattern;
+                if (gameBoard[a] === "O" && gameBoard[b] === "O" && gameBoard[c] === "") return c;
+                if (gameBoard[a] === "O" && gameBoard[c] === "O" && gameBoard[b] === "") return b;
+                if (gameBoard[b] === "O" && gameBoard[c] === "O" && gameBoard[a] === "") return a;
+            }
+
+            // 2️⃣ Block player's win
+            for (let pattern of winPatterns) {
+                let [a, b, c] = pattern;
+                if (gameBoard[a] === "X" && gameBoard[b] === "X" && gameBoard[c] === "") return c;
+                if (gameBoard[a] === "X" && gameBoard[c] === "X" && gameBoard[b] === "") return b;
+                if (gameBoard[b] === "X" && gameBoard[c] === "X" && gameBoard[a] === "") return a;
+            }
+
+            // 3️⃣ Take the center if available
+            if (gameBoard[4] === "") return 4;
+
+            // 4️⃣ Pick a corner if available
+            const corners = [0, 2, 6, 8];
+            for (let corner of corners) {
+                if (gameBoard[corner] === "") return corner;
+            }
+
+            // 5️⃣ Pick a random spot if nothing else works
+            let emptyCells = gameBoard.map((val, i) => val === "" ? i : null).filter(val => val !== null);
+            return emptyCells.length > 0 ? emptyCells[Math.floor(Math.random() * emptyCells.length)] : null;
         }
 
         function checkWin() {
