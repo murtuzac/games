@@ -7,7 +7,7 @@ const retryBtn = document.getElementById("retryBtn");
 let isJumping = false;
 let score = 0;
 let gameRunning = false;
-let gameOverState = false;
+let gameOverState = true;
 let gameInterval;
 
 // 🦖 Start Game on Space Key Press or Tap
