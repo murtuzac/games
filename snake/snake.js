@@ -56,7 +56,8 @@ function draw() {
 
     // Draw snake
     snake.forEach((segment, index) => {
-        ctx.fillStyle = index === 0 ? "black" : "green";
+        /*ctx.fillStyle = index === 0 ? "black" : "green";*/
+        ctx.fillStyle = index === 0 ? "#00cc00" : "#33ff33"; // Bright green shades
         ctx.fillRect(segment.x, segment.y, box, box);
         ctx.strokeStyle = "black";
         ctx.strokeRect(segment.x, segment.y, box, box);
