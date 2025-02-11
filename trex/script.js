@@ -7,8 +7,10 @@ const retryBtn = document.getElementById("retryBtn");
 let isJumping = false;
 let score = 0;
 let gameRunning = false;
-let gameOverState = true;
+let gameOverState = false;
 let gameInterval;
+
+obstacle.style.animation = "none"; // Stop obstacle movement
 
 // 🦖 Start Game on Space Key Press or Tap
 document.addEventListener("keydown", function (event) {
