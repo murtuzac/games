@@ -1,8 +1,8 @@
 const canvas = document.getElementById("gameCanvas");
 const ctx = canvas.getContext("2d");
 const scoreDisplay = document.getElementById("scoreDisplay");
-const appleImage = new Image();
-appleImage.src = "apple.png"; // Make sure the file is in the same directory as your script
+const foodImage = new Image();
+foodImage.src = "rasb.png"; // Make sure the file is in the same directory as your script
 
 const box = 20;
 let snake = [{ x: 10 * box, y: 10 * box }];
@@ -52,7 +52,7 @@ function draw() {
     // Draw food
     /*ctx.fillStyle = "red";
     ctx.fillRect(food.x, food.y, box, box); */
-    ctx.drawImage(appleImage, food.x, food.y, box, box);
+    ctx.drawImage(foodImage, food.x, food.y, box, box);
 
     // Draw snake
     snake.forEach((segment, index) => {
