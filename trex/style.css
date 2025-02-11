@@ -33,7 +33,7 @@ h1 {
 #obstacle {
     width: 30px;
     height: 40px;
-    background-image: url("./cactus.png");
+    background-image: url("./cactus2.png");
     background-size: cover;
     position: absolute;
     bottom: 0;
