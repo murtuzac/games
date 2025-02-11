@@ -8,7 +8,7 @@
 </head>
 <body>
     <h1>🦖 Dino Run</h1>
-    <p>Press <b>Space</b> to Jump!</p>
+    <p>Press <b>Space</b> or touch screen to Jump!</p>
 
     <div id="game">
         <div id="dino"></div>
@@ -21,7 +21,11 @@
     <p id="gameOverMessage" class="hidden">Game Over 😞</p>
 
     <!-- Exit Button -->
-    <button onclick="window.location.href='../index.html'">Exit</button>
+    <!--<button onclick="window.location.href='../index.html'">Exit</button>-->
+    <div class="game-header">
+        <button id="retryBtn" onclick="restartGame()" style="display: none;">Retry</button>
+        <button id="exitBtn" onclick="window.location.href='../index.html'">Exit</button>
+    </div>
 
     <script src="./script.js"></script>
 </body>
