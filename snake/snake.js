@@ -15,6 +15,7 @@ let score = 0;
 let gameStarted = false;
 let gameInterval = null;
 let gameOver = false;
+let highscore = 0;
 
 // Start the game on key press
 document.addEventListener("keydown", (event) => {
@@ -48,6 +49,7 @@ function draw() {
 
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     scoreDisplay.innerText = `Score: ${score}`;
+    hscoreDisplay.innerText = `High Score: ${highscore}`;
 
     // Draw food
     /*ctx.fillStyle = "red";
@@ -107,6 +109,11 @@ function showGameOver() {
     ctx.font = "30px Arial";
     ctx.fillText("Game Over!", canvas.width / 4, canvas.height / 2);
     document.getElementById("retryBtn").style.display = "inline-block";
+    if (highscore < score)
+    {
+        highscore = score;
+    }
+    
 }
 
 function restartGame() {
